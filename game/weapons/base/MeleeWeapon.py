@@ -1,4 +1,4 @@
-from game.weapons.Weapon import Weapon
+from game.weapons.base.Weapon import Weapon
 
 class MeleeWeapon(Weapon):
     def __init__(self, damage, cooldown, range):
