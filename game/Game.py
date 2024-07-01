@@ -1,5 +1,5 @@
 import pygame
-from game.Player import Player
+from .Player import Player
 
 # Define the Game class to encapsulate game initialization, loop, and rendering
 class Game:

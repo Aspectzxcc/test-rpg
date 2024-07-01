@@ -1,4 +1,4 @@
-from weapons.base.MeleeWeapon import MeleeWeapon
+from .base.MeleeWeapon import MeleeWeapon
 
 class Sword(MeleeWeapon):
     def __init__(self, damage, cooldown, range, special_effect):
