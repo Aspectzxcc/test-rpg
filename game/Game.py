@@ -28,6 +28,6 @@ class Game:
         self.player.update(keys)
 
     def render(self):
-        self.screen.fill((0, 0, 0))
+        self.screen.fill((200, 200, 200))
         self.player.render(self.screen)
         pygame.display.flip()

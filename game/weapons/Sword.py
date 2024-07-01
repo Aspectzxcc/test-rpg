@@ -5,8 +5,6 @@ class Sword(MeleeWeapon):
     def __init__(self, damage, cooldown, range, special_effect):
         super().__init__(damage, cooldown, range)
         self.special_effect = special_effect
-        self.image = pygame.Surface((50, 10))  # Create a surface for the sword's image
-        self.image.fill((255, 255, 255))  # Fill the sword's image with white color
 
     def use(self, current_time, *args, **kwargs):
         if current_time - self.last_use_time < self.cooldown:
@@ -19,25 +17,30 @@ class Sword(MeleeWeapon):
         # Additional sword-specific logic
     
     def render(self, screen, player_position, player_direction, current_time):
-        # Only render if the current time is within 200 milliseconds of the last use
         if current_time - self.last_use_time <= 100:
-            # Calculate the sword's position based on the player's direction
-            if player_direction == 'left':
-                position = (player_position[0] - self.image.get_width(), player_position[1])
-                image_to_draw = self.image
-            elif player_direction == 'right':
-                position = (player_position[0], player_position[1])
-                image_to_draw = self.image
-            elif player_direction == 'up':
-                rotated_image = pygame.transform.rotate(self.image, 90)  # Rotate the image 90 degrees
-                position = (player_position[0], player_position[1] - rotated_image.get_height())
-                image_to_draw = rotated_image
-            elif player_direction == 'down':
-                rotated_image = pygame.transform.rotate(self.image, 90)  # Rotate the image 90 degrees
-                position = (player_position[0], player_position[1] + self.image.get_height())
-                image_to_draw = rotated_image
-            else:
-                position = (player_position[0] + self.image.get_width(), player_position[1])
-                image_to_draw = self.image
+            blade_color = (255, 255, 255)  # White blade
+            handle_color = (139, 69, 19)  # Brown handle
 
-            screen.blit(image_to_draw, position)
+            # Define sword geometry
+            blade_length = 40
+            blade_width = 5
+            handle_length = 10
+            handle_width = 3
+
+            # Adjust blade and handle positions based on the player's direction
+            if player_direction == 'left':
+                blade = pygame.Rect(player_position[0] - blade_length - handle_length, player_position[1] - blade_width // 2, blade_length, blade_width)
+                handle = pygame.Rect(blade.right, player_position[1] - handle_width // 2, handle_length, handle_width)
+            elif player_direction == 'right':
+                blade = pygame.Rect(player_position[0] + handle_length, player_position[1] - blade_width // 2, blade_length, blade_width)
+                handle = pygame.Rect(player_position[0], player_position[1] - handle_width // 2, handle_length, handle_width)
+            elif player_direction == 'up':
+                blade = pygame.Rect(player_position[0] - blade_width // 2, player_position[1] - blade_length - handle_length, blade_width, blade_length)
+                handle = pygame.Rect(player_position[0] - handle_width // 2, blade.bottom, handle_width, handle_length)
+            elif player_direction == 'down':
+                blade = pygame.Rect(player_position[0] - blade_width // 2, player_position[1] + handle_length, blade_width, blade_length)
+                handle = pygame.Rect(player_position[0] - handle_width // 2, player_position[1], handle_width, handle_length)
+
+            # Draw sword
+            pygame.draw.rect(screen, blade_color, blade)
+            pygame.draw.rect(screen, handle_color, handle)
