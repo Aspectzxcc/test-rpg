@@ -1,30 +1,33 @@
 import pygame
 
 class Player:
-    # Initialize the player with speed, image, and position
     def __init__(self, screen_width, screen_height):
-        self.speed = 5  # Set the player's movement speed
-        self.image = pygame.Surface((50, 50))  # Create a surface for the player's image
-        self.image.fill((255, 0, 0))  # Fill the player's image with red color
-        self.rect = self.image.get_rect(center=(screen_width // 2, screen_height // 2))  # Position the player at the center
+        self.speed = 5
+        self.image = pygame.Surface((50, 50))
+        self.image.fill((255, 0, 0))
+        self.rect = self.image.get_rect(center=(screen_width // 2, screen_height // 2))
+        self.direction = 'right'
         
         from game.weapons.Sword import Sword
-        self.weapon = Sword(damage=10, cooldown=1, range=5, special_effect="slash")
+        self.weapon = Sword(damage=10, cooldown=1000, range=5, special_effect="slash")
 
-    # Update the player's position based on keyboard input
     def update(self, keys):
-        # Move left
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.rect.x -= self.speed
-        # Move right
+            self.direction = 'left'
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.rect.x += self.speed
-        # Move up
+            self.direction = 'right'
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             self.rect.y -= self.speed
-        # Move down
+            self.direction = 'up'
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.rect.y += self.speed
-        # Use the sword
+            self.direction = 'down'
         if keys[pygame.K_SPACE]:
             self.weapon.use(pygame.time.get_ticks())
+
+    def render(self, screen):
+        # Render the player's image
+        screen.blit(self.image, self.rect)
+        self.weapon.render(screen, self.rect.center, self.direction, pygame.time.get_ticks())

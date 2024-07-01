@@ -6,7 +6,8 @@ class MeleeWeapon(Weapon):
         self.range = range
 
     def use(self, current_time, *args, **kwargs):
-        # Implement melee-specific use behavior here
+        if current_time - self.last_use_time < self.cooldown:
+            print("Melee weapon on cooldown")
+            return
         super().use(current_time, *args, **kwargs)
-        print("Melee weapon used at range:", self.range)
-        # Additional melee-specific logic
+        self.last_use_time = current_time
