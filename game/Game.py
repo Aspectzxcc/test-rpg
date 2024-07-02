@@ -15,6 +15,7 @@ class Game:
         
         # sprites
         self.player = pygame.sprite.GroupSingle(Player(self.screen_width, self.screen_height))
+        self.weapon = pygame.sprite.GroupSingle(self.player.sprite.weapon)
         self.enemies = pygame.sprite.Group(Enemy(200, 500), Enemy(1000, 100))
 
     def run(self):
@@ -36,9 +37,9 @@ class Game:
     def collision_detection(self):
         # Check for collisions between player weapon and enemy
         for enemy in self.enemies.sprites():
-            if self.player.sprite.weapon.rect.colliderect(enemy.rect):
-                print("Enemy hit!")
+            if pygame.sprite.spritecollide(enemy, self.weapon, False):
                 enemy.die()
+                self.weapon.sprite.last_use_time = 0
 
     def update(self):
         keys = pygame.key.get_pressed()
@@ -48,6 +49,6 @@ class Game:
     def render(self):
         self.screen.fill((200, 200, 200))
         self.player.draw(self.screen)
+        self.player.sprite.render_weapon(self.screen)
         self.enemies.draw(self.screen)
-        self.player.sprite.render_weapon(self.screen) # render the player's weapon
         pygame.display.flip()

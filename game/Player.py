@@ -34,4 +34,4 @@ class Player(pygame.sprite.Sprite):
         self.handle_input(keys)
 
     def render_weapon(self, screen):
-        self.weapon.render_sprite(screen, self.rect, self.direction)
+        self.weapon.render(screen, self.rect, self.direction)
