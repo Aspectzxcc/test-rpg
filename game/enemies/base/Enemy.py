@@ -6,8 +6,9 @@ class Enemy(pygame.sprite.Sprite):
         self.image = pygame.Surface((50, 50))
         self.image.fill((0, 0, 255))
         self.rect = self.image.get_rect(center=(screen_width // 2, screen_height // 2))
-        self.health = 100
+        self.health = 10
         self.speed = 3
+        self.weapons_hit_list = set()
         
     def move(self, player_rect):
         dx, dy = (player_rect.x - self.rect.x, player_rect.y - self.rect.y)
@@ -25,10 +26,12 @@ class Enemy(pygame.sprite.Sprite):
             self.kill()
             
     def collision(self, weapon):
-        if pygame.sprite.spritecollide(self, weapon, False):
-            self.take_damage(weapon.sprite.damage)
+        if weapon not in self.weapons_hit_list:
+            if pygame.sprite.spritecollide(self, weapon, False):
+                self.take_damage(weapon.sprite.damage)
+                self.weapons_hit_list.add(weapon)
         
     def update(self, weapon, player_rect):
-        self.move(player_rect)
+        #self.move(player_rect)
         self.collision(weapon)  
         

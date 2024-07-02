@@ -20,7 +20,7 @@ class Game:
         self.enemy_spawn_timer = pygame.USEREVENT + 1
         pygame.time.set_timer(self.enemy_spawn_timer, 1000)  # Spawn an enemy every second
         self.weapon_use_timer = pygame.USEREVENT + 2
-        pygame.time.set_timer(self.weapon_use_timer, 500)  # Use weapon every second (for testing)
+        pygame.time.set_timer(self.weapon_use_timer, self.weapon.sprite.cooldown)  # Use weapon every second (for testing)
 
     def run(self):
         while self.running:
@@ -39,6 +39,8 @@ class Game:
                 self.enemies.add(Enemy(randint(0, self.screen_width), randint(0, self.screen_height)))
             if event.type == self.weapon_use_timer:
                 print("Using weapon")
+                for enemy in self.enemies.sprites():
+                    enemy.weapons_hit_list.clear()
                 self.weapon.sprite.use(pygame.time.get_ticks())
 
     def update(self):

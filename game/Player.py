@@ -9,7 +9,7 @@ class Player(pygame.sprite.Sprite):
         self.image.fill((255, 0, 0))
         self.rect = self.image.get_rect(center=(screen_width // 2, screen_height // 2))
         self.direction = 'right'
-        self.weapon = Sword(damage=20, cooldown=1000, range=5, special_effect="slash")
+        self.weapon = Sword(damage=10, cooldown=1000, range=5, special_effect="slash")
         
     def handle_input(self, keys):
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
