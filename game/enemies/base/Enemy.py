@@ -18,7 +18,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.y += dy * self.speed
         
     def die(self, weapon):
-        if pygame.sprite.spritecollide(self, weapon, False):
+        if weapon.sprite.is_active(pygame.time.get_ticks()) and pygame.sprite.spritecollide(self, weapon, False):
             self.kill()
         
     def update(self, weapon, player_rect):

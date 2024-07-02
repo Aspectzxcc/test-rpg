@@ -44,4 +44,5 @@ class Game:
         self.player.draw(self.screen)
         self.player.sprite.render_weapon(self.screen)
         self.enemies.draw(self.screen)
+        
         pygame.display.flip()

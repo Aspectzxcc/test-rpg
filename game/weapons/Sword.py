@@ -11,7 +11,7 @@ class Sword(MeleeWeapon):
     def render(self, screen, player_rect, player_direction):
         current_time = pygame.time.get_ticks()
         
-        if current_time - self.last_use_time <= 100:
+        if self.is_active(current_time):
             # The sword image is facing up by default
             if player_direction == 'left':
                 # Rotate the image 90 degrees clockwise to face left
@@ -29,7 +29,8 @@ class Sword(MeleeWeapon):
                 # Rotate the image 180 degrees to face down
                 sword_image = pygame.transform.rotate(self.image, 180)
                 self.rect = sword_image.get_rect(midtop=player_rect.midbottom)  # Position the sword below the player
-                
-            # Optionally, draw a bounding box around the sword for debugging
+            
             screen.blit(sword_image, self.rect)
-            pygame.draw.rect(screen, 'Green', self.rect, 1)
+            
+            # draw bounding box
+            pygame.draw.rect(screen, 'Green', self.rect, 2)
