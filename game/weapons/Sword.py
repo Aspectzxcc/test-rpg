@@ -5,17 +5,12 @@ class Sword(MeleeWeapon):
     def __init__(self, damage, cooldown, range, special_effect):
         super().__init__(damage, cooldown, range)
         self.special_effect = special_effect
+        self.rect = None # to be updated in draw
 
     def use(self, current_time, *args, **kwargs):
-        if current_time - self.last_use_time < self.cooldown:
-            print("Sword on cooldown")
-            return
-        # Implement sword-specific use behavior here
         super().use(current_time, *args, **kwargs)
-        self.last_use_time = current_time
         print("Sword special effect:", self.special_effect)
-        # Additional sword-specific logic
-    
+        
     def render(self, screen, player_position, player_direction, current_time):
         if current_time - self.last_use_time <= 100:
             blade_color = (255, 255, 255)  # White blade
@@ -40,6 +35,9 @@ class Sword(MeleeWeapon):
             elif player_direction == 'down':
                 blade = pygame.Rect(player_position[0] - blade_width // 2, player_position[1] + handle_length, blade_width, blade_length)
                 handle = pygame.Rect(player_position[0] - handle_width // 2, player_position[1], handle_width, handle_length)
+                
+            # Update Rect object to allow collision detection
+            self.rect = blade.union(handle)
 
             # Draw sword
             pygame.draw.rect(screen, blade_color, blade)

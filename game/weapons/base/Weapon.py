@@ -8,4 +8,5 @@ class Weapon:
         if current_time - self.last_use_time < self.cooldown:
             print("Weapon on cooldown")
             return
-        print("Weapon used with damage:", self.damage)
+        self.last_use_time = current_time
+        print("Weapon used")
