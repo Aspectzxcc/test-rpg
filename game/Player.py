@@ -26,6 +26,9 @@ class Player(pygame.sprite.Sprite):
             self.direction = 'down'
         if keys[pygame.K_SPACE]:
             self.weapon.use(pygame.time.get_ticks())
+            
+    def die(self):
+        self.kill() 
 
     def update(self, keys):
         self.handle_input(keys)

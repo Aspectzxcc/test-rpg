@@ -9,4 +9,3 @@ class Weapon:
             print("Weapon on cooldown")
             return
         self.last_use_time = current_time
-        print("Weapon used")

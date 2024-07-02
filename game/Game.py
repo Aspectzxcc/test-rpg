@@ -1,5 +1,7 @@
 import pygame
+from random import randint
 from .Player import Player
+from .enemies.base.Enemy import Enemy
 
 class Game:
     def __init__(self):
@@ -8,9 +10,12 @@ class Game:
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.clock = pygame.time.Clock()
         self.running = True
+        self.enemy_spawn_timer = pygame.USEREVENT + 1
+        pygame.time.set_timer(self.enemy_spawn_timer, 1000)  # Spawn an enemy every second
         
-        # player sprite
+        # sprites
         self.player = pygame.sprite.GroupSingle(Player(self.screen_width, self.screen_height))
+        self.enemies = pygame.sprite.Group(Enemy(200, 500), Enemy(1000, 100))
 
     def run(self):
         while self.running:
@@ -24,13 +29,25 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+            if event.type == self.enemy_spawn_timer:
+                print("Spawning enemy")
+                self.enemies.add(Enemy(randint(0, self.screen_width), randint(0, self.screen_height)))
+                
+    def collision_detection(self):
+        # Check for collisions between player weapon and enemy
+        for enemy in self.enemies.sprites():
+            if self.player.sprite.weapon.rect.colliderect(enemy.rect):
+                print("Enemy hit!")
+                enemy.die()
 
     def update(self):
         keys = pygame.key.get_pressed()
         self.player.update(keys)
+        self.collision_detection()
 
     def render(self):
         self.screen.fill((200, 200, 200))
         self.player.draw(self.screen)
+        self.enemies.draw(self.screen)
         self.player.sprite.render_weapon(self.screen) # render the player's weapon
         pygame.display.flip()
