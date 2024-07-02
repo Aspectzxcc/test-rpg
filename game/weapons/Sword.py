@@ -34,6 +34,7 @@ class Sword(MeleeWeapon):
             
             # render bounding box
             pygame.draw.rect(screen, 'Green', self.rect, 1)
+            
         
     def render(self, screen, player_position, player_direction, current_time):
         if current_time - self.last_use_time <= 100:
