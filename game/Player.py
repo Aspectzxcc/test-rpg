@@ -4,10 +4,11 @@ from .weapons.Sword import Sword
 class Player(pygame.sprite.Sprite):
     def __init__(self, screen_width, screen_height):
         super().__init__()
-        self.speed = 5
         self.spritesheet = pygame.image.load('assets/player/down_idle.png').convert_alpha()
         self.image, self.rect = self.extract_sprite(0, 0, 64, 64, screen_width, screen_height)
         self.direction = 'right'
+        self.health = 100
+        self.speed = 5
         self.weapon = Sword(damage=10, cooldown=1000, range=5, special_effect="slash")
         
     def extract_sprite(self, x, y, width, height, screen_width=1280, screen_height=720):

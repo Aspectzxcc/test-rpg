@@ -7,6 +7,7 @@ class Sword(MeleeWeapon):
         self.special_effect = special_effect
         self.image = pygame.image.load('assets/weapons/sword/Animation-1/sprite-0001.png').convert_alpha()
         self.rect = self.image.get_rect()
+        self.active_duration = 450  # Duration in milliseconds for which the sword is active
         
     def render(self, screen, player_rect, player_direction):
         current_time = pygame.time.get_ticks()
@@ -16,19 +17,19 @@ class Sword(MeleeWeapon):
             if player_direction == 'left':
                 # Rotate the image 90 degrees clockwise to face left
                 sword_image = pygame.transform.rotate(self.image, 90)
-                self.rect = sword_image.get_rect(center=player_rect.midleft)  # Position the sword to the left of the player
+                self.rect = sword_image.get_rect(midright=player_rect.center)  # Position the sword to the left of the player
             elif player_direction == 'right':
                 # Rotate the image 270 degrees clockwise (or 90 counter-clockwise) to face right
                 sword_image = pygame.transform.rotate(self.image, -90)
-                self.rect = sword_image.get_rect(center=player_rect.midright)  # Position the sword to the right of the player
+                self.rect = sword_image.get_rect(midleft=player_rect.center)  # Position the sword to the right of the player
             elif player_direction == 'up':
                 # No rotation needed since the sword is already facing up
                 sword_image = self.image
-                self.rect = sword_image.get_rect(center=player_rect.midtop)  # Position the sword above the player
+                self.rect = sword_image.get_rect(midbottom=player_rect.center)  # Position the sword above the player
             elif player_direction == 'down':
                 # Rotate the image 180 degrees to face down
                 sword_image = pygame.transform.rotate(self.image, 180)
-                self.rect = sword_image.get_rect(center=player_rect.midbottom)  # Position the sword below the player
+                self.rect = sword_image.get_rect(midtop=player_rect.center)  # Position the sword below the player
             
             screen.blit(sword_image, self.rect)
             

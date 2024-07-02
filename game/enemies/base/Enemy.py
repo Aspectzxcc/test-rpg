@@ -3,10 +3,8 @@ import pygame
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, screen_width, screen_height):
         super().__init__()
-        self.spritesheet = pygame.image.load('assets/enemies/slime/slime.png').convert_alpha()
-        self.image = pygame.Surface((50, 50))
-        self.image.fill((0, 0, 255))
-        self.rect = self.image.get_rect(center=(screen_width // 2, screen_height // 2))
+        self.spritesheet = pygame.image.load('assets/enemies/skeleton_.png').convert_alpha()
+        self.image, self.rect = self.extract_sprite(0, 24, 24, 32, screen_width, screen_height)
         self.health = 10
         self.speed = 2
         self.weapons_hit_list = set()
@@ -29,17 +27,21 @@ class Enemy(pygame.sprite.Sprite):
     
     def take_damage(self, damage):
         self.health -= damage
-        print(f"Enemy health: {self.health}")
         if self.health <= 0:
             self.kill()
             
-    def collision(self, weapon):
+    def collision(self, weapon, player):
         if weapon not in self.weapons_hit_list:
             if pygame.sprite.spritecollide(self, weapon, False):
                 self.take_damage(weapon.sprite.damage)
                 self.weapons_hit_list.add(weapon)
         
-    def update(self, weapon, player_rect):
+        # if pygame.sprite.spritecollide(self, player, False):
+        #     print("Player collided with enemy")
+        
+        
+    def update(self, weapon, player):
+        player_rect = player.sprite.rect
         self.move(player_rect)
-        self.collision(weapon)  
+        self.collision(weapon, player)  
         

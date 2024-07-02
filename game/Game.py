@@ -46,7 +46,7 @@ class Game:
     def update(self):
         keys = pygame.key.get_pressed()
         self.player.update(keys)
-        self.enemies.update(self.weapon, self.player.sprite.rect)    
+        self.enemies.update(self.weapon, self.player)    
         
     def draw_bounds(self):
         pygame.draw.rect(self.screen, 'White', self.player.sprite.rect, 1)
