@@ -36,6 +36,11 @@ class Player(pygame.sprite.Sprite):
             self.rect.y += self.speed
             self.collision_rect.y += self.speed
             self.direction = 'down'
+            
+    def take_damage(self, damage):
+        self.health -= damage
+        if self.health <= 0:
+            self.kill()
 
     def update(self, keys):
         self.handle_input(keys)

@@ -33,18 +33,19 @@ class Enemy(pygame.sprite.Sprite):
         if self.health <= 0:
             self.kill()
             
-    def collision(self, weapon, player_rect):
+    def collision(self, weapon, player):
         if weapon not in self.weapons_hit_list:
             if self.rect.colliderect(weapon.sprite.collision_rect):
                 self.take_damage(weapon.sprite.damage)
                 self.weapons_hit_list.add(weapon)
         
-        if player_rect.colliderect(self.rect):
-            print("Player collided with enemy")
+        if player.sprite.collision_rect.colliderect(self.rect):
+            print(f"Player Health: {player.sprite.health}")
+            # player.sprite.take_damage(1)
         
         
     def update(self, weapon, player):
         player_rect = player.sprite.collision_rect
         self.move(player_rect)
-        self.collision(weapon, player_rect)  
+        self.collision(weapon, player)  
         
