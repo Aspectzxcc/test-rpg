@@ -1,7 +1,8 @@
 import pygame
 
-class Player:
+class Player(pygame.sprite.Sprite):
     def __init__(self, screen_width, screen_height):
+        super().__init__()
         self.speed = 5
         self.image = pygame.Surface((50, 50))
         self.image.fill((255, 0, 0))

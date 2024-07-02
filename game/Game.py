@@ -7,8 +7,10 @@ class Game:
         self.screen_width, self.screen_height = 1280, 720
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.clock = pygame.time.Clock()
-        self.player = Player(self.screen_width, self.screen_height)
         self.running = True
+        
+        # player sprite
+        self.player = pygame.sprite.GroupSingle(Player(self.screen_width, self.screen_height))
 
     def run(self):
         while self.running:
@@ -29,5 +31,6 @@ class Game:
 
     def render(self):
         self.screen.fill((200, 200, 200))
-        self.player.render(self.screen)
+        self.player.draw(self.screen)
+        self.player.sprite.render(self.screen) # render the player's weapon
         pygame.display.flip()
