@@ -9,7 +9,6 @@ class Sword(MeleeWeapon):
 
     def use(self, current_time, *args, **kwargs):
         super().use(current_time, *args, **kwargs)
-        print("Sword special effect:", self.special_effect)
         
     def render(self, screen, player_position, player_direction, current_time):
         if current_time - self.last_use_time <= 100:
@@ -42,3 +41,6 @@ class Sword(MeleeWeapon):
             # Draw sword
             pygame.draw.rect(screen, blade_color, blade)
             pygame.draw.rect(screen, handle_color, handle)
+            
+            # render the bounding box
+            pygame.draw.rect(screen, 'Green', self.rect, 1)
