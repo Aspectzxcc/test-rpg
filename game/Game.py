@@ -38,8 +38,8 @@ class Game:
         # Check for collisions between player weapon and enemy
         for enemy in self.enemies.sprites():
             if pygame.sprite.spritecollide(enemy, self.weapon, False):
+                print("Enemy hit!")
                 enemy.die()
-                self.weapon.sprite.last_use_time = 0
 
     def update(self):
         keys = pygame.key.get_pressed()
