@@ -51,9 +51,9 @@ class Game:
         
     def draw_bounds(self):
         pygame.draw.rect(self.screen, 'Black', self.player.sprite.rect, 1)
-        pygame.draw.rect(self.screen, 'Blue', self.player.sprite.collision_rect, 1)
-        pygame.draw.rect(self.screen, 'Green', self.weapon.sprite.rect, 1)
-        pygame.draw.rect(self.screen, 'Orange', self.weapon.sprite.collision_rect, 1)
+        pygame.draw.rect(self.screen, 'White', self.player.sprite.collision_rect, 1)
+        pygame.draw.rect(self.screen, 'Red', self.weapon.sprite.rect, 1)
+        pygame.draw.rect(self.screen, 'Green', self.weapon.sprite.collision_rect, 1)
         for enemy in self.enemies:
             pygame.draw.rect(self.screen, 'Red', enemy.rect, 1)
             pygame.draw.rect(self.screen, 'Green', enemy.collision_rect, 1)
