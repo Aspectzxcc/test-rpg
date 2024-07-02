@@ -5,6 +5,7 @@ class Weapon(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.Surface((10, 50))
         self.rect = self.image.get_rect()
+        self.collision_rect = self.rect
         self.damage = damage
         self.cooldown = cooldown  # Cooldown in milliseconds
         self.last_use_time = 0

@@ -5,7 +5,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, screen_width, screen_height):
         super().__init__()
         self.spritesheet = pygame.image.load('assets/player/down_idle.png').convert_alpha()
-        self.image, self.rect = self.extract_sprite(0, 0, 64, 64, screen_width, screen_height)
+        self.image, self.rect, self.collision_rect = self.extract_sprite(0, 0, 64, 64, screen_width, screen_height)
         self.direction = 'right'
         self.health = 100
         self.speed = 5
@@ -16,20 +16,25 @@ class Player(pygame.sprite.Sprite):
         sprite.blit(self.spritesheet, (0, 0), (x, y, width, height))
         sprite = pygame.transform.scale2x(sprite)
         rect = sprite.get_rect(center=(screen_width // 2, screen_height // 2))
-        return sprite, rect
+        collision_rect = rect.inflate(-80, -50)
+        return sprite, rect, collision_rect
         
     def handle_input(self, keys):
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.rect.x -= self.speed
+            self.collision_rect.x -= self.speed
             self.direction = 'left'
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.rect.x += self.speed
+            self.collision_rect.x += self.speed
             self.direction = 'right'
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             self.rect.y -= self.speed
+            self.collision_rect.y -= self.speed
             self.direction = 'up'
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.rect.y += self.speed
+            self.collision_rect.y += self.speed
             self.direction = 'down'
 
     def update(self, keys):

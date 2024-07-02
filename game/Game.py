@@ -15,7 +15,7 @@ class Game:
         # sprites
         self.player = pygame.sprite.GroupSingle(Player(self.screen_width, self.screen_height))
         self.weapon = pygame.sprite.GroupSingle(self.player.sprite.weapon)
-        self.enemies = pygame.sprite.Group(Enemy(200, 500), Enemy(1000, 100))
+        self.enemies = pygame.sprite.Group()
         
         # timers
         self.enemy_spawn_timer = pygame.USEREVENT + 1
@@ -50,10 +50,13 @@ class Game:
         self.enemies.update(self.weapon, self.player)    
         
     def draw_bounds(self):
-        pygame.draw.rect(self.screen, 'White', self.player.sprite.rect, 1)
+        pygame.draw.rect(self.screen, 'Black', self.player.sprite.rect, 1)
+        pygame.draw.rect(self.screen, 'Blue', self.player.sprite.collision_rect, 1)
         pygame.draw.rect(self.screen, 'Green', self.weapon.sprite.rect, 1)
+        pygame.draw.rect(self.screen, 'Orange', self.weapon.sprite.collision_rect, 1)
         for enemy in self.enemies:
             pygame.draw.rect(self.screen, 'Red', enemy.rect, 1)
+            pygame.draw.rect(self.screen, 'Green', enemy.collision_rect, 1)
 
     def render(self):
         self.screen.fill((200, 200, 200))
