@@ -33,18 +33,11 @@ class Game:
             if event.type == self.enemy_spawn_timer:
                 print("Spawning enemy")
                 self.enemies.add(Enemy(randint(0, self.screen_width), randint(0, self.screen_height)))
-                
-    def collision_detection(self):
-        # Check for collisions between player weapon and enemy
-        for enemy in self.enemies.sprites():
-            if pygame.sprite.spritecollide(enemy, self.weapon, False):
-                print("Enemy hit!")
-                enemy.die()
 
     def update(self):
         keys = pygame.key.get_pressed()
         self.player.update(keys)
-        self.collision_detection()
+        self.enemies.update(self.weapon, self.player.sprite.rect)    
 
     def render(self):
         self.screen.fill((200, 200, 200))
