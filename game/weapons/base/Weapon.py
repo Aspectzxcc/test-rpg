@@ -1,7 +1,10 @@
-class Weapon:
+import pygame
+
+class Weapon(pygame.sprite.Sprite):
     def __init__(self, damage, cooldown):
+        super().__init__()
         self.damage = damage
-        self.cooldown = cooldown # Cooldown in milliseconds
+        self.cooldown = cooldown  # Cooldown in milliseconds
         self.last_use_time = 0
 
     def use(self, current_time, *args, **kwargs):
