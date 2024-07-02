@@ -3,12 +3,20 @@ import pygame
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, screen_width, screen_height):
         super().__init__()
+        self.spritesheet = pygame.image.load('assets/enemies/slime/slime.png').convert_alpha()
         self.image = pygame.Surface((50, 50))
         self.image.fill((0, 0, 255))
         self.rect = self.image.get_rect(center=(screen_width // 2, screen_height // 2))
         self.health = 10
         self.speed = 2
         self.weapons_hit_list = set()
+        
+    def extract_sprite(self, x, y, width, height, screen_width=1280, screen_height=720):
+        sprite = pygame.Surface((width, height), pygame.SRCALPHA)
+        sprite.blit(self.spritesheet, (0, 0), (x, y, width, height))
+        sprite = pygame.transform.scale2x(sprite)
+        rect = sprite.get_rect(center=(screen_width // 2, screen_height // 2))
+        return sprite, rect
         
     def move(self, player_rect):
         dx, dy = (player_rect.centerx - self.rect.x, player_rect.centery - self.rect.y)
