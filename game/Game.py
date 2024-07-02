@@ -10,15 +10,17 @@ class Game:
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.clock = pygame.time.Clock()
         self.running = True
-        self.enemy_spawn_timer = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.enemy_spawn_timer, 1000)  # Spawn an enemy every second
-        self.weapon_use_timer = pygame.USEREVENT + 2
-        pygame.time.set_timer(self.weapon_use_timer, 500)  # Use weapon every second (for testing)
         
         # sprites
         self.player = pygame.sprite.GroupSingle(Player(self.screen_width, self.screen_height))
         self.weapon = pygame.sprite.GroupSingle(self.player.sprite.weapon)
         self.enemies = pygame.sprite.Group(Enemy(200, 500), Enemy(1000, 100))
+        
+        # timers
+        self.enemy_spawn_timer = pygame.USEREVENT + 1
+        pygame.time.set_timer(self.enemy_spawn_timer, 1000)  # Spawn an enemy every second
+        self.weapon_use_timer = pygame.USEREVENT + 2
+        pygame.time.set_timer(self.weapon_use_timer, 500)  # Use weapon every second (for testing)
 
     def run(self):
         while self.running:
