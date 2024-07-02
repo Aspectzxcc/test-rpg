@@ -5,8 +5,8 @@ class Sword(MeleeWeapon):
     def __init__(self, damage, cooldown, range, special_effect):
         super().__init__(damage, cooldown, range)
         self.special_effect = special_effect
-        self.image = None
-        self.rect = None
+        self.image = pygame.image.load('assets/weapons/sword/Animation-1/sprite-0001.png').convert_alpha()
+        self.rect = self.image.get_rect()
 
     def use(self, current_time, *args, **kwargs):
         super().use(current_time, *args, **kwargs)
@@ -15,24 +15,28 @@ class Sword(MeleeWeapon):
         current_time = pygame.time.get_ticks()
         
         if current_time - self.last_use_time <= 100:
-            self.image = pygame.image.load('assets/weapons/sword-1.png').convert_alpha()
-            self.image = pygame.transform.rotozoom(self.image, -45, 0.2) 
-            
-            if player_direction == 'right':
-                self.rect = self.image.get_rect(center=(player_rect.right + 10, player_rect.centery))
-            elif player_direction == 'left':
-                self.image = pygame.transform.flip(self.image, True, False)
-                self.rect = self.image.get_rect(center=(player_rect.left - 10, player_rect.centery))
+            # The sword image is facing up by default
+            if player_direction == 'left':
+                # Rotate the image 90 degrees clockwise to face left
+                sword_image = pygame.transform.rotate(self.image, 90)
+                self.rect.midright = player_rect.midleft  # Position the sword to the left of the player
+            elif player_direction == 'right':
+                # Rotate the image 270 degrees clockwise (or 90 counter-clockwise) to face right
+                sword_image = pygame.transform.rotate(self.image, -90)
+                self.rect.midleft = player_rect.midright  # Position the sword to the right of the player
             elif player_direction == 'up':
-                self.image = pygame.transform.rotate(self.image, 90)
-                self.rect = self.image.get_rect(center=(player_rect.centerx, player_rect.top - 10))
+                # No rotation needed since the sword is already facing up
+                sword_image = self.image
+                self.rect.midbottom = player_rect.midtop  # Position the sword above the player
             elif player_direction == 'down':
-                self.image = pygame.transform.rotate(self.image, -90)
-                self.rect = self.image.get_rect(center=(player_rect.centerx, player_rect.bottom + 10))
-            
-            screen.blit(self.image, self.rect)
-            
-            # render bounding box
+                # Rotate the image 180 degrees to face down
+                sword_image = pygame.transform.rotate(self.image, 180)
+                self.rect.midtop = player_rect.midbottom  # Position the sword below the player
+
+            # Draw the sword
+            screen.blit(sword_image, self.rect)
+                
+            # Optionally, draw a bounding box around the sword for debugging
             pygame.draw.rect(screen, 'Green', self.rect, 1)
             
         
