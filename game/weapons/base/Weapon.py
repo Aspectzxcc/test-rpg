@@ -8,7 +8,7 @@ class Weapon(pygame.sprite.Sprite):
         self.damage = damage
         self.cooldown = cooldown  # Cooldown in milliseconds
         self.last_use_time = 0
-        self.active_duration = 50  # Duration in milliseconds for which the weapon is active
+        self.active_duration = 100  # Duration in milliseconds for which the weapon is active
         
     def is_ready(self, current_time):
         return current_time - self.last_use_time >= self.cooldown

@@ -16,21 +16,24 @@ class Sword(MeleeWeapon):
             if player_direction == 'left':
                 # Rotate the image 90 degrees clockwise to face left
                 sword_image = pygame.transform.rotate(self.image, 90)
-                self.rect = sword_image.get_rect(midright=player_rect.midleft)  # Position the sword to the left of the player
+                self.rect = sword_image.get_rect(center=player_rect.midleft)  # Position the sword to the left of the player
             elif player_direction == 'right':
                 # Rotate the image 270 degrees clockwise (or 90 counter-clockwise) to face right
                 sword_image = pygame.transform.rotate(self.image, -90)
-                self.rect = sword_image.get_rect(midleft=player_rect.midright)  # Position the sword to the right of the player
+                self.rect = sword_image.get_rect(center=player_rect.midright)  # Position the sword to the right of the player
             elif player_direction == 'up':
                 # No rotation needed since the sword is already facing up
                 sword_image = self.image
-                self.rect = sword_image.get_rect(midbottom=player_rect.midtop)  # Position the sword above the player
+                self.rect = sword_image.get_rect(center=player_rect.midtop)  # Position the sword above the player
             elif player_direction == 'down':
                 # Rotate the image 180 degrees to face down
                 sword_image = pygame.transform.rotate(self.image, 180)
-                self.rect = sword_image.get_rect(midtop=player_rect.midbottom)  # Position the sword below the player
+                self.rect = sword_image.get_rect(center=player_rect.midbottom)  # Position the sword below the player
             
             screen.blit(sword_image, self.rect)
             
             # draw bounding box
             # pygame.draw.rect(screen, 'Green', self.rect, 1)
+        else:
+            self.rect = (0, 0, 0, 0)
+            
