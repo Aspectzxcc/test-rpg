@@ -9,11 +9,10 @@ class Enemy(pygame.sprite.Sprite):
         self.speed = 5
         
     def move(self, player_rect):
-        dx = player_rect.x - self.rect.x
-        dy = player_rect.y - self.rect.y
+        dx, dy = (player_rect.x - self.rect.x, player_rect.y - self.rect.y)
         dist = (dx ** 2 + dy ** 2) ** 0.5
         if dist != 0:
-            dx, dy = dx / dist, dy / dist # Normalize the vector
+            dx, dy = (dx / dist, dy / dist) # Normalize the vector
             
         self.rect.x += dx * self.speed
         self.rect.y += dy * self.speed
