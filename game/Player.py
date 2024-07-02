@@ -5,11 +5,17 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, screen_width, screen_height):
         super().__init__()
         self.speed = 5
-        self.image = pygame.Surface((50, 50))
-        self.image.fill((255, 0, 0))
-        self.rect = self.image.get_rect(center=(screen_width // 2, screen_height // 2))
+        self.spritesheet = pygame.image.load('assets/player/down_idle.png').convert_alpha()
+        self.image, self.rect = self.extract_sprite(0, 0, 64, 64, screen_width, screen_height)
         self.direction = 'right'
         self.weapon = Sword(damage=10, cooldown=1000, range=5, special_effect="slash")
+        
+    def extract_sprite(self, x, y, width, height, screen_width=1280, screen_height=720):
+        sprite = pygame.Surface((width, height), pygame.SRCALPHA)
+        sprite.blit(self.spritesheet, (0, 0), (x, y, width, height))
+        sprite = pygame.transform.scale2x(sprite)
+        rect = sprite.get_rect(center=(screen_width // 2, screen_height // 2))
+        return sprite, rect
         
     def handle_input(self, keys):
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:

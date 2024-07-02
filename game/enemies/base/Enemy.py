@@ -11,7 +11,7 @@ class Enemy(pygame.sprite.Sprite):
         self.weapons_hit_list = set()
         
     def move(self, player_rect):
-        dx, dy = (player_rect.x - self.rect.x, player_rect.y - self.rect.y)
+        dx, dy = (player_rect.centerx - self.rect.x, player_rect.centery - self.rect.y)
         dist = (dx ** 2 + dy ** 2) ** 0.5 # Euclidean distance
         if dist != 0:
             dx, dy = (dx / dist, dy / dist) # Normalize the vector

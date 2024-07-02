@@ -47,11 +47,20 @@ class Game:
         keys = pygame.key.get_pressed()
         self.player.update(keys)
         self.enemies.update(self.weapon, self.player.sprite.rect)    
+        
+    def draw_bounds(self):
+        pygame.draw.rect(self.screen, 'White', self.player.sprite.rect, 1)
+        pygame.draw.rect(self.screen, 'Green', self.weapon.sprite.rect, 1)
+        for enemy in self.enemies:
+            pygame.draw.rect(self.screen, 'Red', enemy.rect, 1)
 
     def render(self):
         self.screen.fill((200, 200, 200))
         self.player.draw(self.screen)
         self.player.sprite.render_weapon(self.screen)
         self.enemies.draw(self.screen)
+        
+        # draw bounding boxes for debugging
+        self.draw_bounds()
         
         pygame.display.flip()
