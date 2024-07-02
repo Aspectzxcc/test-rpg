@@ -31,7 +31,5 @@ class Player(pygame.sprite.Sprite):
     def update(self, keys):
         self.handle_input(keys)
 
-    def render(self, screen):
-        # Render the player's image
-        screen.blit(self.image, self.rect)
+    def render_weapon(self, screen):
         self.weapon.render(screen, self.rect.center, self.direction, pygame.time.get_ticks())

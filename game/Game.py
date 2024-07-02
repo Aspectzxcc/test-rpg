@@ -32,5 +32,5 @@ class Game:
     def render(self):
         self.screen.fill((200, 200, 200))
         self.player.draw(self.screen)
-        self.player.sprite.render(self.screen) # render the player's weapon
+        self.player.sprite.render_weapon(self.screen) # render the player's weapon
         pygame.display.flip()
