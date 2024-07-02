@@ -7,7 +7,7 @@ class Enemy(pygame.sprite.Sprite):
         self.image.fill((0, 0, 255))
         self.rect = self.image.get_rect(center=(screen_width // 2, screen_height // 2))
         self.health = 10
-        self.speed = 3
+        self.speed = 2
         self.weapons_hit_list = set()
         
     def move(self, player_rect):
@@ -32,6 +32,6 @@ class Enemy(pygame.sprite.Sprite):
                 self.weapons_hit_list.add(weapon)
         
     def update(self, weapon, player_rect):
-        #self.move(player_rect)
+        self.move(player_rect)
         self.collision(weapon)  
         

@@ -16,7 +16,7 @@ class Weapon(pygame.sprite.Sprite):
     def is_active(self, current_time):
         return current_time - self.last_use_time <= self.active_duration
 
-    def use(self, current_time, *args, **kwargs):
+    def use(self, current_time):
         if not self.is_ready(current_time):
             return
         self.last_use_time = current_time
