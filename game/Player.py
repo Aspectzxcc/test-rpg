@@ -11,8 +11,8 @@ class Player(pygame.sprite.Sprite):
         
         from game.weapons.Sword import Sword
         self.weapon = Sword(damage=10, cooldown=1000, range=5, special_effect="slash")
-
-    def update(self, keys):
+        
+    def handle_input(self, keys):
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.rect.x -= self.speed
             self.direction = 'left'
@@ -27,6 +27,9 @@ class Player(pygame.sprite.Sprite):
             self.direction = 'down'
         if keys[pygame.K_SPACE]:
             self.weapon.use(pygame.time.get_ticks())
+
+    def update(self, keys):
+        self.handle_input(keys)
 
     def render(self, screen):
         # Render the player's image
