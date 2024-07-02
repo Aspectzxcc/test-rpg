@@ -15,7 +15,7 @@ class Sword(MeleeWeapon):
         current_time = pygame.time.get_ticks()
         
         if current_time - self.last_use_time <= 100:
-            self.image = pygame.image.load('assets/weapons/sword-1.png')
+            self.image = pygame.image.load('assets/weapons/sword-1.png').convert_alpha()
             self.image = pygame.transform.rotozoom(self.image, -45, 0.2) 
             
             if player_direction == 'right':
@@ -31,6 +31,9 @@ class Sword(MeleeWeapon):
                 self.rect = self.image.get_rect(center=(player_rect.centerx, player_rect.bottom + 10))
             
             screen.blit(self.image, self.rect)
+            
+            # render bounding box
+            pygame.draw.rect(screen, 'Green', self.rect, 1)
         
     def render(self, screen, player_position, player_direction, current_time):
         if current_time - self.last_use_time <= 100:
