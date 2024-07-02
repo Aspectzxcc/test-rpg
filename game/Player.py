@@ -1,4 +1,5 @@
 import pygame
+from .weapons.Sword import Sword
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, screen_width, screen_height):
@@ -8,9 +9,7 @@ class Player(pygame.sprite.Sprite):
         self.image.fill((255, 0, 0))
         self.rect = self.image.get_rect(center=(screen_width // 2, screen_height // 2))
         self.direction = 'right'
-        
-        from .weapons.Sword import Sword
-        self.weapon = Sword(damage=10, cooldown=1000, range=5, special_effect="slash")
+        self.weapon = Sword(damage=10, cooldown=0, range=5, special_effect="slash")
         
     def handle_input(self, keys):
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
@@ -32,4 +31,4 @@ class Player(pygame.sprite.Sprite):
         self.handle_input(keys)
 
     def render_weapon(self, screen):
-        self.weapon.render(screen, self.rect.center, self.direction, pygame.time.get_ticks())
+        self.weapon.render_sprite(screen, self.rect, self.direction)

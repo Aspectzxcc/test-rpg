@@ -5,10 +5,32 @@ class Sword(MeleeWeapon):
     def __init__(self, damage, cooldown, range, special_effect):
         super().__init__(damage, cooldown, range)
         self.special_effect = special_effect
-        self.rect = None # to be updated in draw
+        self.image = None
+        self.rect = None
 
     def use(self, current_time, *args, **kwargs):
         super().use(current_time, *args, **kwargs)
+        
+    def render_sprite(self, screen, player_rect, player_direction):
+        current_time = pygame.time.get_ticks()
+        
+        if current_time - self.last_use_time <= 100:
+            self.image = pygame.image.load('assets/weapons/sword-1.png')
+            self.image = pygame.transform.rotozoom(self.image, -45, 0.2) 
+            
+            if player_direction == 'right':
+                self.rect = self.image.get_rect(center=(player_rect.right + 10, player_rect.centery))
+            elif player_direction == 'left':
+                self.image = pygame.transform.flip(self.image, True, False)
+                self.rect = self.image.get_rect(center=(player_rect.left - 10, player_rect.centery))
+            elif player_direction == 'up':
+                self.image = pygame.transform.rotate(self.image, 90)
+                self.rect = self.image.get_rect(center=(player_rect.centerx, player_rect.top - 10))
+            elif player_direction == 'down':
+                self.image = pygame.transform.rotate(self.image, -90)
+                self.rect = self.image.get_rect(center=(player_rect.centerx, player_rect.bottom + 10))
+            
+            screen.blit(self.image, self.rect)
         
     def render(self, screen, player_position, player_direction, current_time):
         if current_time - self.last_use_time <= 100:
