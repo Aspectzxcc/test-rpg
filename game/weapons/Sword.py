@@ -33,4 +33,4 @@ class Sword(MeleeWeapon):
             screen.blit(sword_image, self.rect)
             
             # draw bounding box
-            pygame.draw.rect(screen, 'Green', self.rect, 2)
+            # pygame.draw.rect(screen, 'Green', self.rect, 1)
